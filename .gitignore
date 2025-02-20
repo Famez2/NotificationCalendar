@@ -482,3 +482,5 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+/src/NotificationCalendar.Api/appsettings.Development.json
+/src/NotificationCalendar.Api/appsettings.json

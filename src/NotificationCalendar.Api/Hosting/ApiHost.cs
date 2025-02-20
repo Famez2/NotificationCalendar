@@ -49,6 +49,7 @@ public class ApiHost
 
         return Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration(config => config.AddConfiguration(builtConfig))
+            .UseSerilog()
             .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<T>());
     }
 }

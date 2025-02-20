@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NotificationCalendar.Persistence;
-using System.Reflection;
 
 namespace NotificationCalendar.Api.Extensions;
 
@@ -9,16 +8,7 @@ public static class ServiceCollectionExtensions
     public static void AddSwaggerDocs(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(c =>
-        {
-            var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-            var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-            c.IncludeXmlComments(xmlPath);
-
-            c.CustomSchemaIds(type => type.ToString()
-                .Replace("+", "_")
-                .Replace("`1", ""));
-        });
+        services.AddSwaggerGen();
     }
 
     public static void ConfigureAutoMapper(this IServiceCollection services, IConfiguration configuration)
