@@ -32,7 +32,7 @@ public class Startup
     {
         app.UseMiddleware<ExceptionHandlingMiddleware>();
 
-        app.UseSwagger();
+        app.UseSwaggerDocumentation();
 
         app.UseSerilogRequestLogging();
 

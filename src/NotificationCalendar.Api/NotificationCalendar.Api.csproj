@@ -24,10 +24,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\NotificationCalendar.Common\NotificationCalendar.Common.csproj" />
     <ProjectReference Include="..\NotificationCalendar.Application\NotificationCalendar.Application.csproj" />
     <ProjectReference Include="..\NotificationCalendar.Persistence\NotificationCalendar.Persistence.csproj" />
