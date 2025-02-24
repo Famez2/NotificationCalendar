@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Absplan.Persistence.Configurations;
+using Microsoft.EntityFrameworkCore;
 using NotificationCalendar.Abstractions.Persistence.Base;
+using NotificationCalendar.Domain.Entities;
 using System.Reflection;
 
 namespace NotificationCalendar.Persistence;
@@ -11,10 +13,17 @@ public class NotificationCalendarDbContext : BaseDbContext, INotificationCalenda
     {
     }
 
+    public DbSet<Note> Note { get; set; }
+
+    public DbSet<Header> Header { get; set; }
+
     protected override void ConfigureModelBuilder(ModelBuilder modelBuilder)
     {
         base.ConfigureModelBuilder(modelBuilder);
 
         modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+
+        modelBuilder.ApplyConfiguration(new AuditableEntityTypeConfiguration<Note>());
+        modelBuilder.ApplyConfiguration(new AuditableEntityTypeConfiguration<Header>());
     }
 }
