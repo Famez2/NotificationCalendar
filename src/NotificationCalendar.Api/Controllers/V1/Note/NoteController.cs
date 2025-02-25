@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NotificationCalendar.Api.Contracts;
+using NotificationCalendar.Application.Handlers.Note.Commands.DeleteNote;
 using NotificationCalendar.Application.Handlers.Note.Commands.UpdateNote;
 using NotificationCalendar.Application.Handlers.Notes.Commands.AddNote;
 using NotificationCalendar.Contracts.Note;
@@ -41,6 +42,18 @@ public class NoteController : ControllerBase
     {
         var command = _mapper.Map<UpdateNoteCommand>(request);
         command.Id = id;
+
+        await _mediator.Send(command, cancellationToken);
+
+        return new ApiResponseV1();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ApiResponseV1> DeleteNoteAsync(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken)
+    {
+        var command = new DeleteNoteCommand { Id = id };
 
         await _mediator.Send(command, cancellationToken);
 
