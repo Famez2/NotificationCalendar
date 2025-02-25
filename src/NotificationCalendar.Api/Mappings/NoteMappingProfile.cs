@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NotificationCalendar.Application.Handlers.Authentication.Commands.SignUpUser;
 using NotificationCalendar.Application.Handlers.Note.Commands.UpdateNote;
 using NotificationCalendar.Application.Handlers.Notes.Commands.AddNote;
 using NotificationCalendar.Contracts.Note;
@@ -16,5 +17,7 @@ public class NoteMappingProfile : Profile
         CreateMap<AddNotesDTO.HeaderInfoModel, AddNotesCommand.HeaderInfoModel>();
 
         CreateMap<UpdateNoteDTO, UpdateNoteCommand>();
+
+        CreateMap<SignupFormDTO, SingUpUserCommand>();
     }
 }

@@ -1,9 +1,12 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Builder.Extensions;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using NotificationCalendar.Api.Behaviors;
 using NotificationCalendar.Api.Extensions;
 using NotificationCalendar.Api.Middleware;
 using NotificationCalendar.Application.Handlers;
 using NotificationCalendar.Application.Handlers.Notes.Commands.AddNote;
+using NotificationCalendar.Domain.Options;
 using Serilog;
 
 namespace NotificationCalendar.Api;
@@ -19,12 +22,17 @@ public class Startup
 
     public virtual void ConfigureServices(IServiceCollection services)
     {
+        services.Configure<JwtTokenOptions>(Configuration.GetSection(JwtTokenOptions.SectionName));
+        services.Configure<SafeCookieOptions>(Configuration.GetSection(SafeCookieOptions.SectionName));
+
         services.AddHttpContextAccessor();
         services.AddSwaggerDocs(Configuration);
 
         services.AddControllers();
 
         services.AddNotificationCalendarDbContext(Configuration);
+
+        services.AddJwtTokenAuth(Configuration);
 
         services.AddMediatR(cfg => {
             cfg.RegisterServicesFromAssembly(typeof(AddNotesCommand).Assembly);

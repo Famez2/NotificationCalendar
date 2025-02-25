@@ -17,6 +17,8 @@ public class NotificationCalendarDbContext : BaseDbContext, INotificationCalenda
 
     public DbSet<Header> Header { get; set; }
 
+    public DbSet<User> User { get; set; }
+
     protected override void ConfigureModelBuilder(ModelBuilder modelBuilder)
     {
         base.ConfigureModelBuilder(modelBuilder);

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NotificationCalendar.Api.Contracts;
 using NotificationCalendar.Application.Handlers.Note.Commands.DeleteNote;
@@ -9,6 +10,7 @@ using NotificationCalendar.Contracts.Note;
 
 namespace NotificationCalendar.Api.Controllers.V1.Note;
 
+[Authorize]
 [ApiController]
 [Route("api/calendar")]
 public class NoteController : ControllerBase
