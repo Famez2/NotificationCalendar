@@ -4,6 +4,8 @@ namespace NotificationCalendar.Application.Handlers.Notes.Commands.AddNote;
 
 public class AddNotesCommand : IRequest
 {
+    public Guid UserId { get; set; }
+
     public HeaderInfoModel Header { get; set; }
 
     public class NoteInfoModel

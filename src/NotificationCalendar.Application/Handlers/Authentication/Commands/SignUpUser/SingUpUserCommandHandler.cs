@@ -50,6 +50,7 @@ public class SingUpUserCommandHandler : IRequestHandler<SingUpUserCommand>
     {
         var user = new User
         {
+            Id = Guid.NewGuid(),
             Email = command.Email,
             Password = command.Password
         };

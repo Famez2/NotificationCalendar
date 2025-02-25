@@ -11,6 +11,10 @@
     <PackageReference Include="FluentValidation" Version="11.11.0" />
     <PackageReference Include="MediatR" Version="12.4.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.2" />
+    <PackageReference Include="Quartz" Version="3.13.1" />
+    <PackageReference Include="Quartz.AspNetCore" Version="3.13.1" />
+    <PackageReference Include="Quartz.Extensions.Hosting" Version="3.13.1" />
+    <PackageReference Include="Quartz.Jobs" Version="3.13.1" />
     <PackageReference Include="System.Security.Claims" Version="4.3.0" />
   </ItemGroup>
 
@@ -18,6 +22,7 @@
     <ProjectReference Include="..\NotificationCalendar.Abstractions\NotificationCalendar.Abstractions.csproj" />
     <ProjectReference Include="..\NotificationCalendar.Common\NotificationCalendar.Common.csproj" />
     <ProjectReference Include="..\NotificationCalendar.Domain\NotificationCalendar.Domain.csproj" />
+    <ProjectReference Include="..\NotificationCalendar.Infrastructure\NotificationCalendar.Infrastructure.csproj" />
     <ProjectReference Include="..\NotificationCalendar.Persistence\NotificationCalendar.Persistence.csproj" />
   </ItemGroup>
 

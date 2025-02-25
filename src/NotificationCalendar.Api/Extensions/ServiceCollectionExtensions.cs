@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using NotificationCalendar.Application.Jobs;
 using NotificationCalendar.Domain.Options;
 using NotificationCalendar.Persistence;
+using Quartz;
+using Quartz.AspNetCore;
 using System.Security.AccessControl;
 using System.Text;
 
@@ -12,6 +15,8 @@ namespace NotificationCalendar.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {
+    private const string DefaultTimeZone = "Russian Standard Time";
+
     public static void AddNotificationCalendarDbContext(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<INotificationCalendarDbContext, NotificationCalendarDbContext>(options => options
@@ -75,5 +80,31 @@ public static class ServiceCollectionExtensions
         });
 
         return services;
+    }
+
+    public static void AddQuartz(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddQuartz(q =>
+        {
+            var noteExpiredJobOptions = configuration
+                                            .GetSection(ExpiredNoteJobOptions.SectionName)
+                                            .Get<ExpiredNoteJobOptions>()
+                                        ?? throw new ArgumentException($"Empty job options for job '{nameof(NoteExpiredJob)}'");
+
+            var noteExpiredJobKey = new JobKey(noteExpiredJobOptions.Identity);
+
+            q.AddJob<NoteExpiredJob>(opts => opts.WithIdentity(noteExpiredJobKey));
+
+            q.AddTrigger(opts => opts
+                .ForJob(noteExpiredJobKey)
+                .WithIdentity(noteExpiredJobOptions.IdentityTrigger)
+                .WithCronSchedule(noteExpiredJobOptions.Cron, cronOpts => cronOpts.InTimeZone(TimeZoneInfo.FindSystemTimeZoneById(DefaultTimeZone))));
+        });
+
+        services.AddQuartzServer(options =>
+        {
+            options.WaitForJobsToComplete = true;
+            options.AwaitApplicationStarted = true;
+        });
     }
 }

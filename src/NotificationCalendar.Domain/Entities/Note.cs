@@ -10,11 +10,15 @@ public class Note : IAuditableEntity
 
     public Guid HeaderId { get; set; }
 
+    public Guid UserId { get; set; }
+
     public DateTime ScheduledAt { get; set; }
 
     public DateTime CreatedAt { get; set; }
 
     public DateTime UpdatedAt { get; set; }
+
+    public User User { get; set; }
 
     public Header Header { get; set; }
 }

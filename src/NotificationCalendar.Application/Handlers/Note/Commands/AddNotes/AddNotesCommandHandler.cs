@@ -22,6 +22,7 @@ public class AddNotesCommandHandler : IRequestHandler<AddNotesCommand>
             {
                 Content = n.Content,
                 ScheduledAt = n.ScheduledAt.Value,
+                UserId = command.UserId
             })
             .ToList()
         };

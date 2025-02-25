@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NotificationCalendar.Api.Contracts;
+using NotificationCalendar.Api.Extensions;
 using NotificationCalendar.Application.Handlers.Note.Commands.DeleteNote;
 using NotificationCalendar.Application.Handlers.Note.Commands.UpdateNote;
 using NotificationCalendar.Application.Handlers.Notes.Commands.AddNote;
@@ -30,6 +31,7 @@ public class NoteController : ControllerBase
         CancellationToken cancellationToken)
     {
         var command = _mapper.Map<AddNotesCommand>(request);
+        command.UserId = this.GetUserId();
 
         await _mediator.Send(command, cancellationToken);
 
