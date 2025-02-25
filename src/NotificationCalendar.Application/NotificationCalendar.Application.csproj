@@ -6,4 +6,14 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NotificationCalendar.Abstractions\NotificationCalendar.Abstractions.csproj" />
+    <ProjectReference Include="..\NotificationCalendar.Domain\NotificationCalendar.Domain.csproj" />
+    <ProjectReference Include="..\NotificationCalendar.Persistence\NotificationCalendar.Persistence.csproj" />
+  </ItemGroup>
+
 </Project>
