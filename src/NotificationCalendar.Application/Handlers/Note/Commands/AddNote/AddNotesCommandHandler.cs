@@ -21,7 +21,7 @@ public class AddNotesCommandHandler : IRequestHandler<AddNotesCommand>
             .Select(n => new Domain.Entities.Note
             {
                 Content = n.Content,
-                ScheduledAt = n.ScheduledAt,
+                ScheduledAt = n.ScheduledAt.Value,
             })
             .ToList()
         };

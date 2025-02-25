@@ -1,4 +1,6 @@
-﻿using NotificationCalendar.Api.Extensions;
+﻿using FluentValidation;
+using NotificationCalendar.Api.Behaviors;
+using NotificationCalendar.Api.Extensions;
 using NotificationCalendar.Api.Middleware;
 using NotificationCalendar.Application.Handlers;
 using NotificationCalendar.Application.Handlers.Note.Commands.AddNote;
@@ -24,7 +26,12 @@ public class Startup
 
         services.AddNotificationCalendarDbContext(Configuration);
 
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(typeof(AddNotesCommandHandler).Assembly));
+        services.AddMediatR(cfg => {
+            cfg.RegisterServicesFromAssembly(typeof(AddNotesCommand).Assembly);
+            cfg.AddOpenBehavior(typeof(ValidationBehavior<,>));
+        });
+
+        services.AddValidatorsFromAssembly(typeof(AddNotesCommand).Assembly);
 
         services.ConfigureAutoMapper(Configuration);
 

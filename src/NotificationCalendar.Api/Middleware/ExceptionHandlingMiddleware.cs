@@ -1,4 +1,5 @@
-﻿using NotificationCalendar.Api.Contracts;
+﻿using FluentValidation;
+using NotificationCalendar.Api.Contracts;
 using NotificationCalendar.Common.Exceptions;
 using System.Diagnostics;
 using System.Text.Json;
@@ -72,6 +73,24 @@ public class ExceptionHandlingMiddleware
                 "Request processing has been cancelled by client. Url: {RequestPath}. HttpMethod: {RequestMethod}. StatusCode: {StatusCode}",
                 context.Request.Path, context.Request.Method,
                 context.Response.StatusCode);
+        }
+        catch (ValidationException ex)
+        {
+            stopwatch.Stop();
+
+            var errors = ex.Errors
+                .GroupBy(x => x.PropertyName, x => x.ErrorMessage, (propertyName, errorMessages) => new
+                {
+                    Key = propertyName,
+                    Values = errorMessages.Distinct().ToArray()
+                })
+                .ToDictionary(k => k.Key, v => v.Values);
+
+            await HandleExceptionAsync(context, "Ошибка валидации", StatusCodes.Status400BadRequest, errors);
+
+            logger.LogError(ex,
+                "Validation error occurred. Url: {RequestPath}. HttpMethod: {RequestMethod}. StatusCode: {StatusCode}",
+                context.Request.Path, context.Request.Method, context.Response.StatusCode);
         }
         catch (Exception ex)
         {
