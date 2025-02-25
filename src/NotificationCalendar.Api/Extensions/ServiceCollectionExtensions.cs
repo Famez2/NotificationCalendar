@@ -19,6 +19,6 @@ public static class ServiceCollectionExtensions
 
     public static void ConfigureAutoMapper(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddAutoMapper(typeof(Api.Mappings.MockClass).Assembly, typeof(Application.Mappings.MockClass).Assembly);
+        services.AddAutoMapper(typeof(Api.Mappings.NoteMappingProfile).Assembly, typeof(Application.Mappings.MockClass).Assembly);
     }
 }

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using NotificationCalendar.Persistence;
 
-namespace NotificationCalendar.Application.Handlers.Note.Commands.AddNote;
+namespace NotificationCalendar.Application.Handlers.Notes.Commands.AddNote;
 
 public class AddNotesCommandHandler : IRequestHandler<AddNotesCommand>
 {

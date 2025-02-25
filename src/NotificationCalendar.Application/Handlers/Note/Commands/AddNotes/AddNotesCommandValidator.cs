@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace NotificationCalendar.Application.Handlers.Note.Commands.AddNote;
+namespace NotificationCalendar.Application.Handlers.Notes.Commands.AddNote;
 
 public class AddNotesCommandValidator : AbstractValidator<AddNotesCommand>
 {

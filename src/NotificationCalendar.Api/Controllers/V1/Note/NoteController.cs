@@ -2,7 +2,8 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using NotificationCalendar.Api.Contracts;
-using NotificationCalendar.Application.Handlers.Note.Commands.AddNote;
+using NotificationCalendar.Application.Handlers.Note.Commands.UpdateNote;
+using NotificationCalendar.Application.Handlers.Notes.Commands.AddNote;
 using NotificationCalendar.Contracts.Note;
 
 namespace NotificationCalendar.Api.Controllers.V1.Note;
@@ -26,6 +27,20 @@ public class NoteController : ControllerBase
         CancellationToken cancellationToken)
     {
         var command = _mapper.Map<AddNotesCommand>(request);
+
+        await _mediator.Send(command, cancellationToken);
+
+        return new ApiResponseV1();
+    }
+
+    [HttpPatch("{id}")]
+    public async Task<ApiResponseV1> UpdateNoteAsync(
+        [FromRoute] Guid id,
+        [FromBody] UpdateNoteDTO request,
+        CancellationToken cancellationToken)
+    {
+        var command = _mapper.Map<UpdateNoteCommand>(request);
+        command.Id = id;
 
         await _mediator.Send(command, cancellationToken);
 

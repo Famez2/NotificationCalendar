@@ -3,7 +3,7 @@ using NotificationCalendar.Api.Behaviors;
 using NotificationCalendar.Api.Extensions;
 using NotificationCalendar.Api.Middleware;
 using NotificationCalendar.Application.Handlers;
-using NotificationCalendar.Application.Handlers.Note.Commands.AddNote;
+using NotificationCalendar.Application.Handlers.Notes.Commands.AddNote;
 using Serilog;
 
 namespace NotificationCalendar.Api;
