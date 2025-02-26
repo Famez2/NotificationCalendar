@@ -1,0 +1,6 @@
+@NotificationCalendar.Api_HostAddress = http://localhost:5231
+
+GET {{NotificationCalendar.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

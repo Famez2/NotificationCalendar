@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  notification-calendar-app:
+    build:
+      context: .
+      dockerfile: src/NotificationCalendar.Api/Dockerfile
+    container_name: notification-calendar-api
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      ConnectionStrings__AbsplanDatabase: "Host=notification-calendar-db;Port=5432;Database=notificationCalendar;Username=notificationCalendar;Password=notificationCalendar;"
+    depends_on:
+      - notification-calendar-db
+
+  notification-calendar-db:
+    image: postgres:15
+    container_name: notification-calendar-db
+    restart: always
+    environment:
+      POSTGRES_DB: notificationCalendar
+      POSTGRES_USER: notificationCalendar
+      POSTGRES_PASSWORD: notificationCalendar
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+volumes:
+  pg_data:
