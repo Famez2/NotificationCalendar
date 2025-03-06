@@ -8,6 +8,7 @@ using System.Text;
 
 namespace NotificationCalendar.Api.Controllers.V1.Note;
 
+[Route("odata/notes")]
 public class NoteODataController : ODataController
 {
     private readonly INotificationCalendarDbContext _notificationCalendarDbContext;
@@ -22,6 +23,7 @@ public class NoteODataController : ODataController
     }
 
     [EnableQuery]
+    [HttpGet]
     public async Task<IActionResult> GetNotesAsync()
     {
         var notes = await _notificationCalendarDbContext.Note.ToListAsync();

@@ -7,23 +7,24 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["src/NotificationCalendar.Api/NotificationCalendar.Api.csproj", "src/NotificationCalendar.Api/"]
-COPY ["src/NotificationCalendar.Persistence/NotificationCalendar.Persistence.csproj", "src/NotificationCalendar.Persistence/"]
-COPY ["src/NotificationCalendar.Abstractions/NotificationCalendar.Abstractions.csproj", "src/NotificationCalendar.Abstractions/"]
-COPY ["src/NotificationCalendar.Common/NotificationCalendar.Common.csproj", "src/NotificationCalendar.Common/"]
-COPY ["src/NotificationCalendar.Domain/NotificationCalendar.Domain.csproj", "src/NotificationCalendar.Domain/"]
-COPY ["src/NotificationCalendar.Contracts/NotificationCalendar.Contracts.csproj", "src/NotificationCalendar.Contracts/"]
-COPY ["src/NotificationCalendar.Application/NotificationCalendar.Application.csproj", "src/NotificationCalendar.Application/"]
-RUN dotnet restore "src/NotificationCalendar.Api/NotificationCalendar.Api.csproj"
-COPY . .
-WORKDIR "/src/src/NotificationCalendar.Api"
+
+COPY ../NotificationCalendar.Api/NotificationCalendar.Api.csproj NotificationCalendar.Api/
+COPY ../NotificationCalendar.Persistence/NotificationCalendar.Persistence.csproj NotificationCalendar.Persistence/
+COPY ../NotificationCalendar.Abstractions/NotificationCalendar.Abstractions.csproj NotificationCalendar.Abstractions/
+COPY ../NotificationCalendar.Common/NotificationCalendar.Common.csproj NotificationCalendar.Common/
+COPY ../NotificationCalendar.Domain/NotificationCalendar.Domain.csproj NotificationCalendar.Domain/
+COPY ../NotificationCalendar.Contracts/NotificationCalendar.Contracts.csproj NotificationCalendar.Contracts/
+COPY ../NotificationCalendar.Application/NotificationCalendar.Application.csproj NotificationCalendar.Application/
+
+RUN dotnet restore "NotificationCalendar.Api/NotificationCalendar.Api.csproj"
+
+COPY ../ .
+
+WORKDIR "/src/NotificationCalendar.Api"
+
 RUN dotnet build "NotificationCalendar.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
 RUN dotnet publish "NotificationCalendar.Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-FROM base AS final
-WORKDIR /app
-COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "NotificationCalendar.Api.dll"]
