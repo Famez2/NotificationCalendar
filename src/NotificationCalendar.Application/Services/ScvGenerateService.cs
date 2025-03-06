@@ -10,7 +10,7 @@ public class ScvGenerateService : IScvGenerateService
     private readonly INotificationCalendarDbContext _notificationCalendarDbContext;
 
     public ScvGenerateService(
-        INotificationCalendarDbContext notificationCalendarDbContext,)
+        INotificationCalendarDbContext notificationCalendarDbContext)
     {
         _notificationCalendarDbContext = notificationCalendarDbContext;
     }
